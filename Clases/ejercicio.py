@@ -10,9 +10,10 @@ class Ejercicio:
     def __init__(self,datos):
         self.datos = pd.read_csv(datos)
         self.datos.dropna()
-    def cotar_usuarios(self): #con esta funcion cuento cuanta gente entra en a web
-        contar = self.datos["uuid"].count()
-        return contar
+        self.A = self.datos["uuid"].count()
+        
+
+
     def transformaciones(self): #con esta funcion se cuenta cuantos clientes finalmente han realizado la conversion con un bucle
         contador_call = 0  
         contador_form = 0
@@ -22,7 +23,7 @@ class Ejercicio:
             elif i =="FORM":
                 contador_form = contador_form + 1
         return contador_call, contador_form
-    def recurrentes(self):
+    def recurrentes(self): # funcion para tipo de reccurrencia
         contador_recurrente = 0
         contador_no_recur = 0
         for i in self.datos["user_recurrent"]:
@@ -30,11 +31,15 @@ class Ejercicio:
                 contador_recurrente = contador_recurrente + 1
             elif i == "False":
                 contador_no_recur = contador_no_recur + 1
-        return contador_recurrente, contador_no_recur
-        
-hola = Ejercicio("conversiones (4).csv")
-hola2 = Ejercicio("navegacion (4).csv")
-hola2.cotar_usuarios()
-hola.transformaciones()
-hola2.recurrentes()
+        return ((contador_recurrente/self.A)*100, (contador_no_recur/self.A)*100)
+    
+    def repetidos(self):
+        self.B = self.datos["id_user"].drop_duplicates()
+        self.C = self.datos["gclid"].drop_duplicates()
+        return self.B, self.A
+    def coche_mas_visto(self):
+        indice= self.datos.loc[self.datos[0]==self.cant].index
+        valor = self.datos["url_landing"][indice][0]
+        return valor
+
 
