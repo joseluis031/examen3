@@ -14,14 +14,17 @@ class Ejercicio:
         contar = self.datos["uuid"].count()
         return contar
     def transformaciones(self): #con esta funcion se cuenta cuantos clientes finalmente han realizado la conversion con un bucle
-        contador = 0  
+        contador_call = 0  
+        contador_form = 0
         for i in self.datos["lead_type"]:
             if i == "CALL":
-                contador = contador + 1
+                contador_call = contador_call + 1
             elif i =="FORM":
-                pass
-        return contador
+                contador_form = contador_form + 1
+        return contador_call, contador_form
         
 hola = Ejercicio("conversiones (4).csv")
-hola.cotar_usuarios()
+hola2 = Ejercicio("navegacion (4).csv")
+hola2.cotar_usuarios()
+hola.transformaciones()
 
